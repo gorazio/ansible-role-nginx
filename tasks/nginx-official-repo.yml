@@ -4,10 +4,15 @@
   tags: [packages,nginx]
   when: ansible_os_family == 'Debian'
 
-- name: Ensure APT official nginx repository
-  apt_repository: repo='ppa:nginx/stable'
+- name: Ensure APT official nginx stable repository
+  apt_repository: repo='deb http://nginx.org/packages/{{ ansible_distribution|lower }}/ {{ ansible_distribution_release }} nginx'
   tags: [packages,nginx]
-  when: ansible_os_family == 'Debian'
+  when: ansible_os_family == 'Debian' and nginx_release == 'stable'
+
+- name: Ensure APT official nginx mainline repository
+  apt_repository: repo='deb http://nginx.org/packages/mainline/{{ ansible_distribution|lower }}/ {{ ansible_distribution_release }} nginx'
+  tags: [packages,nginx]
+  when: ansible_os_family == 'Debian' and nginx_release == 'mainline'
 
 - name: Ensure RPM official nginx key
   rpm_key: key=http://nginx.org/keys/nginx_signing.key

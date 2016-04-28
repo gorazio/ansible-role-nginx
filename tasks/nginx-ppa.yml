@@ -1,0 +1,4 @@
+- name: Ensure APT official nginx repository
+  apt_repository: repo='ppa:nginx/stable'
+  tags: [packages,nginx]
+  when: ansible_os_family == 'Debian'
